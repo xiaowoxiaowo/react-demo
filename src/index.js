@@ -1,9 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TodoList from './TodoList'
+import TodoListNew from './TodoListNew'
+//import App from './App'
+import './mock.js'
 ReactDOM.render(
-  <React.StrictMode>
-    <TodoList />
-  </React.StrictMode>,
+  <TodoListNew />,
   document.getElementById('root')
 )
+/*
+<React.StrictMode>
+<App />
+</React.StrictMode>,*/

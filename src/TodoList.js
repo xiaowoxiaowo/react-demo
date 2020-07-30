@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './style.css'
 import TodoItem from './TodoItem'
+import axios from 'axios'
 /*function TodoList() {
   return (
     <Fragment>
@@ -25,7 +26,6 @@ class TodoList extends Component {
     this.handleItemDelete =this.handleItemDelete.bind(this)
   }
   render() {
-    console.log('list render')
     return (
       <Fragment>
         {/*这是一段注释*/}
@@ -35,6 +35,7 @@ class TodoList extends Component {
                className='input'
                value={this.state.inputValue}
                onChange={this.handleInputChange}
+               ref={(input) => {this.input = input}}
         ></input>
         <button onClick={this.handleBtnClick}>提交</button>
         {this.state.inputValue}
@@ -43,6 +44,11 @@ class TodoList extends Component {
         </ul>
       </Fragment>
     )
+  }
+  componentDidMount() {
+    axios.post('/mock').then(res => {
+      console.log(res.data)
+    })
   }
   getTodoItem() {
     return this.state.list.map((item, index) => {

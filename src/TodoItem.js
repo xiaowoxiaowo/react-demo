@@ -8,13 +8,19 @@ class TodoItem extends Component {
     this.index = props.index
     this.handleItemDelete = props.handleItemDelete*/
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.content !== this.props.content) {
+      return true
+    } else {
+      return false
+    }
+  }
   render() {
-    console.log('item render')
-    const { test, content } = this.props
+    const { content } = this.props
     return (
       <li
         onClick={this.handleClick}
-        dangerouslySetInnerHTML={{__html: test+'-'+content}}
+        dangerouslySetInnerHTML={{__html: content}}
       ></li>
     )
   }
@@ -24,7 +30,7 @@ class TodoItem extends Component {
   }
 }
 TodoItem.propTypes = {
-  content: PropTypes.string.isRequired,
+  content: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   handleItemDelete: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired
 }

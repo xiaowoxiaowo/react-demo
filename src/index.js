@@ -1,10 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TodoListNew from './TodoListNew'
-//import App from './App'
+import TodoList from './new/TodoList'
+import { Provider } from 'react-redux'
+import store from './newStore'
 import './mock.js'
+
+const App = (
+  <Provider store={store}>
+    <TodoList />
+  </Provider>
+)
+
+//import App from './App'
 ReactDOM.render(
-  <TodoListNew />,
+  App,
   document.getElementById('root')
 )
 /*

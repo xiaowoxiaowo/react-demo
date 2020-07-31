@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Input, Button, List } from 'antd'
 import 'antd/dist/antd.css'
 import store from './store'
-import { getInputChangeAction, addListAction, deleteListAction } from './store/actionCreators'
+import TodoListNewUI from './TodoListNewUI'
+import { getInputChangeAction, addListAction, deleteListAction, getInitList } from './store/actionCreators'
+import axios from 'axios'
 
 class TodoListNew extends Component {
   constructor(props) {
@@ -14,26 +15,26 @@ class TodoListNew extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleStoreChange = this.handleStoreChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleItemDelete = this.handleItemDelete.bind(this)
     store.subscribe(this.handleStoreChange)
   }
   render() {
     return (
-      <div style={{padding: '10px'}}>
-        <Input
-          value={this.state.inputValue}
-          placeholder="请输入内容"
-          style={{width: '300px', marginRight: '10px'}}
-          onChange={this.handleInputChange}
-        />
-        <Button type="primary" onClick={this.handleClick}>提交</Button>
-        <List
-          style={{marginTop: '10px', width: '400px'}}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => <List.Item onClick={this.handleItemDelete.bind(this, index)}>{item}</List.Item>}
-        />
-      </div>
+      <TodoListNewUI
+        inputValue={this.state.inputValue}
+        list={this.state.list}
+        handleInputChange={this.handleInputChange}
+        handleClick={this.handleClick}
+        handleItemDelete={this.handleItemDelete}
+      />
     )
+  }
+  componentDidMount() {
+    store.dispatch(getInitList())
+    /*axios.post('/mock').then(res => {
+      console.log(res.data.data)
+      store.dispatch(initListAction(res.data.data))
+    })*/
   }
   handleInputChange(e) {
     store.dispatch(getInputChangeAction(e.target.value))
@@ -47,6 +48,7 @@ class TodoListNew extends Component {
     store.dispatch(addListAction())
   }
   handleItemDelete(index) {
+    console.log('list', index)
     store.dispatch(deleteListAction(index))
   }
 }

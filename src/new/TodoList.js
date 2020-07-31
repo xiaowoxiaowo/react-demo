@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+
 const TodoList = (props) => {
   const { inputValue, list, handleInputChange, handleAddList, deleteItem } = props
   return (
